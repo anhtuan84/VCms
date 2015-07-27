@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>VietEsoft.Web</id>
+    <version>1.0</version>
+    <authors>tuan.tla@gmail.com</authors>
+    <owners>tuan.tla@gmail.com</owners>
+    <licenseUrl>http://tuantla.vn</licenseUrl>
+    <projectUrl>http://tuantla.vn/projects/robin.net.storage</projectUrl>    
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>VietEsoft Web Mvc Framework</description>
+    <tags>VietEsoft</tags>
+    <dependencies>
+	
+   </dependencies>
+  </metadata>
+</package>

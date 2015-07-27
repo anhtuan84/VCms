@@ -1,0 +1,57 @@
+﻿@using Models;
+@model dynamic 
+         
+ 
+@{
+   
+    ViewBag.Title = "Crud Index";
+}
+
+<h2>@(@Model.entityName)</h2>
+
+<div>
+    @Html.ActionLink("Create New", "Create")
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                <input type="checkbox" name="checkAll" id="checkAll" />
+            </th>
+            <th>Id</th>
+            <th>Name</th>         
+            <th>Modified</th>
+            <th>Modify By</th>
+            <th>Created</th>
+            <th>Create By</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in @Model.entities)
+        {            
+        <tr>
+            <td>
+                <input type="checkbox" name="check" id="check" value="@item.Id" />
+            </td>
+            <td>
+                @Html.ActionLink((String)item.Id, "Edit", new {entity= Model.entityName, id = item.Id })
+                
+            </td>
+            <td></td>
+            <td>@item.ModifiedOn</td>
+            <td>@item.ModifiedBy</td>
+            <td>@item.CreatedOn</td>
+            <td>@item.CreatedBy</td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="7" style="text-align:right">Pager</td>
+        </tr>
+    </tfoot>
+</table>
+<ul>
+   
+</ul>

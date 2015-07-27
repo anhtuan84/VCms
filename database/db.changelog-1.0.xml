@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+  <changeSet id="db-version-1.0" author="tuan.vu">
+
+    <createTable tableName="Logins">
+      <column name="Id" type="VARCHAR(128)"/>
+      <column name="UserName" type="NVARCHAR(255)"/>
+      <column name="Password" type="NVARCHAR(255)" />
+      <column name="Password2" type="NVARCHAR(255)"/>
+      <column name="Password3" type="NVARCHAR(255)"/>
+      <column name="LastLogin" type="DATETIME"/>
+      <column name="IpAddress" type="NVARCHAR(255)"/>
+      <column name="Status" type="BIGINT"/>
+      <column name="CreatedOn" type="DATETIME"/>
+      <column name="ModifiedOn" type="DATETIME"/>
+      <column name="CreatedBy" type="NVARCHAR(255)"/>
+      <column name="ModifiedBy" type="NVARCHAR(255)"/>
+      <column name="Deleted" type="BIGINT"/>
+    </createTable>
+
+
+    <createTable tableName="BOUsers">
+      <column name="Id" type="VARCHAR(128)"/>
+      <column name="LoginId" type="VARCHAR(128)"/>
+      <column name="FullName" type="NVARCHAR(255)"/>
+      <column name="Email" type="NVARCHAR(255)" />
+      <column name="Phone" type="NVARCHAR(255)"/>
+      <column name="Address" type="NVARCHAR(255)"/>
+      <column name="DepartmentId" type="VARCHAR(128)"/>
+      <column name="Status" type="BIGINT"/>
+      <column name="CreatedOn" type="DATETIME"/>
+      <column name="ModifiedOn" type="DATETIME"/>
+      <column name="CreatedBy" type="NVARCHAR(255)"/>
+      <column name="ModifiedBy" type="NVARCHAR(255)"/>
+      <column name="Deleted" type="BIGINT"/>
+    </createTable>
+
+  </changeSet>
+  
+  <changeSet id="db-version-1.0.b" author="tuan.vu">
+  <!-- Master Data -->
+    <insert tableName="BOUsers">
+      <column name="Id" value="5DuzcZz0j8u0zArSNzZgHO"/>
+      <column name="LoginId" value="0Hqc73diuE33kQkU73kKeW"/>
+      <column name="FullName" value="Super Administration"/>
+      <column name="Phone" value="0"/>
+      <column name="Address" value="0"/>
+      <column name="DepartmentId" value=""/>
+      <column name="Status" value="0"/>
+      <column name="CreatedOn" value="2015-08-06 00:00:00"/>
+      <column name="ModifiedOn" value="2015-08-06 00:00:00"/>
+      <column name="CreatedBy" value="sontv"/>
+      <column name="ModifiedBy" value="sontv"/>
+      <column name="Deleted" value="0"/>
+    </insert>
+
+    <insert tableName="Logins">
+      <column name="Id" value="0Hqc73diuE33kQkU73kKeW"/>
+      <column name="UserName" value="super"/>
+      <column name="Password" value="a6d5cc83a21bb0d06b8cccbacec868ff" /> <!--qwerty1234% -->
+      <column name="Password2" value=""/>
+      <column name="Password3" value=""/>
+      <column name="LastLogin" value="2015-08-06 00:00:00"/>
+      <column name="IpAddress" value="0.0.0.0"/>
+      <column name="Status" value="0"/>
+      <column name="CreatedOn" value="2015-08-06 00:00:00"/>
+      <column name="ModifiedOn" value="2015-08-06 00:00:00"/>
+      <column name="CreatedBy" value="sontv"/>
+      <column name="ModifiedBy" value="sontv"/>
+      <column name="Deleted" value="0"/>
+    </insert>
+    <rollback>
+      DELETE FROM  Logins;
+      DELETE FROM BOUsers;
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,9 @@
+﻿
+<ul>
+    @foreach (var item in Model.entities)
+    {
+        <li>
+            <a href="@Url.Action("Index", "Crud"+@item.Name)"> @item.Name</a>
+        </li>
+    }
+</ul>

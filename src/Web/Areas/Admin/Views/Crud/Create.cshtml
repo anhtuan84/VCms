@@ -1,0 +1,27 @@
+﻿@model dynamic 
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+@using (Html.BeginForm())
+{ 
+    @Html.AntiForgeryToken()
+    <div style="width:300px;margin:0 auto">
+        @Html.ValidationSummary(true, "Login failed. Check your login details.")
+        @Html.Hidden("Id", (String)Model.entity.Id)
+        <fieldset>
+            <legend>Login</legend>
+            @foreach (var field in Model.EditableFiels)
+            {
+                <div class="editor-label">
+                    @Html.Label((String)field.Name)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBox((String)field.Name)               
+                </div>
+            }
+            <input type="submit" value="Create" />
+        </fieldset>
+    </div>
+}

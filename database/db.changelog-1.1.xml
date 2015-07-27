@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet id="db-version-1.1" author="tuan.vu">
+         <createTable tableName="BusinessLicenses">
+            <column name="Id" type="VARCHAR(128)"/>
+			      <column name="Status" type="BIGINT"/>
+			      <column name="CreatedOn" type="DATETIME"/>
+			      <column name="ModifiedOn" type="DATETIME"/>
+			      <column name="CreatedBy" type="NVARCHAR(255)"/>
+			      <column name="ModifiedBy" type="NVARCHAR(255)"/>
+			      <column name="Deleted" type="BIGINT"/>			
+			      <column name="IssueDate" type="DATETIME"/>	
+			      <column name="PassportNo" type="NVARCHAR(255)"/>				
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Administration</title>
+    <link href="~/favicon.ico"
+          rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet"
+          href="@Url.Content("~/Areas/Admin/Content/Admin.css")" />
+</head>
+<body class="Admin">
+    <header>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p class="site-title">
+                    @Html.ActionLink("Administration","Index", "Home")
+                </p>
+               
+                 @if (User.Identity.IsAuthenticated){
+                    <span>welcome <b>@User.Identity.Name</b></span>
+                }                
+               
+            </div>
+            <div class="float-right">
+                <nav>
+                    <ul id="menu">
+                        <li>
+                            <!--
+                            @Html.ActionLink("Home",
+                            "Index", "Home")
+                              -->
+                    </li>
+                                          
+            </ul>
+        </nav>
+    </div>
+</div>
+</header>
+<div id="body">
+    <nav id="MainMenu">
+        @Html.Action("MainMenu")        
+    </nav>   
+    <article>
+        @RenderSection("featured", required: false)
+        <section class="content-wrapper main-content clear-fix">
+            @RenderBody()
+        </section>
+    </article>
+</div>
+<footer>
+    <div class="content-wrapper">
+        <div class="float-left">
+            <p>&copy; @DateTime.Now.Year &acirc;&euro;&ldquo; Administration</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html> 

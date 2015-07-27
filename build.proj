@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0"
+         DefaultTargets="Build"
+         xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <OutDir Condition=" '$(OutDir)'=='' ">$(MSBuildThisFileDirectory)build\</OutDir>
+    <Configuration Condition=" '$(Configuration)'=='' ">Release</Configuration>
+    <SourceHome Condition=" '$(SourceHome)'=='' ">$(MSBuildThisFileDirectory)src\</SourceHome>
+    <ToolsHome Condition=" '$(ToolsHome)'=='' ">$(MSBuildThisFileDirectory)tools\</ToolsHome>
+    <DatabaseHome Condition=" '$(DatabaseHome)'=='' ">$(MSBuildThisFileDirectory)database\</DatabaseHome>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Solution Include="$(SourceHome)*.sln">
+      <AdditionalProperties>OutDir=$(OutDir);Configuration=$(Configuration)</AdditionalProperties>
+    </Solution>
+  </ItemGroup>
+
+  <Target Name="RestorePackages">
+    <Exec Command="&quot;$(ToolsHome)NuGet\NuGet.exe&quot; restore &quot;%(Solution.Identity)&quot;" />
+  </Target>
+
+  <Target Name="Clean">
+    <MSBuild Targets="Clean"
+             Projects="@(Solution)" />
+    <RemoveDir Directories="$(OutDir)" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="RestorePackages">
+    <MSBuild Targets="Build"
+             Projects="@(Solution)" />
+  </Target>
+
+  <Target Name="Rebuild" DependsOnTargets="RestorePackages">
+    <MSBuild Targets="Rebuild"
+             Projects="@(Solution)" />
+  </Target>
+
+  <Target Name="Pack">
+    <ItemGroup>
+      <ProjectFiles Include="$(SourceHome)**\*.csproj" />
+    </ItemGroup>
+    <!--
+  <RemoveDir Directories="$(MSBuildThisFileDirectory)NuGet" />
+  <MakeDir Directories="$(MSBuildThisFileDirectory)NuGet" />
+  -->
+    <!--Exec Command="echo %(ProjectFiles.FullPath)"-->
+	
+    <Exec  Command="&quot;$(ToolsHome)NuGet\NuGet.exe&quot; pack %(ProjectFiles.Identity) -Verbosity detailed -OutputDirectory &quot;$(OutDir) &quot;" />
+  </Target>
+
+  <Target Name="Deploy" >
+    <ItemGroup>
+      <NugetPackages Include="$(OutDir)**\*.nupkg" />
+    </ItemGroup>
+    <Exec WorkingDirectory="$(PackageDir)" Command="&quot;$(ToolsHome)NuGet\NuGet.exe&quot; push &quot;%(NugetPackages.Identity)&quot;  -Verbosity detailed   -s http://54.69.100.29:8081/nexus/service/local/nuget/Nuget" />
+  </Target>
+
+  <Target Name="dbUpdate" >
+    <Exec WorkingDirectory="$(DatabaseHome)" Command="&quot;$(ToolsHome)Liquibase\liquibase.bat&quot; update" />
+  </Target>
+
+  <Target Name="dbRollback" >
+    <Exec WorkingDirectory="$(DatabaseHome)" Command="&quot;$(ToolsHome)Liquibase\liquibase.bat&quot; rollback rollbackCount=$(rollbackCount)" />
+  </Target>
+  
+  <Target Name="Liquibase" >
+    <Exec WorkingDirectory="$(DatabaseHome)" Command="&quot;$(ToolsHome)Liquibase\liquibase.bat&quot; $(Command)" />
+  </Target>
+  
+  <Target Name="NugetBuild">
+
+    <!-- Restore potentially build-time packages that are restored by build.cmd on Windows -->
+    <Exec Command="&quot;$(ToolsHome)NuGet\NuGet.exe&quot; install packages.config -excludeversion -outputdirectory packages" Condition="Exists('packages.config')" />
+
+    <!-- Install MSBuild nuget package if necessary -->
+    <Exec Command="&quot;$(ToolsHome)NuGet\NuGet.exe&quot; install MSBuild -excludeversion -outputdirectory packages" Condition="!Exists('packages/MSBuild/tools/Unix/MSBuild.exe')" />
+
+    <!-- Finally build with MSBuild the build.proj itself -->
+    <Exec Command="mono packages/MSBuild/tools/Unix/MSBuild.exe build.proj" />
+
+  </Target>
+
+</Project>

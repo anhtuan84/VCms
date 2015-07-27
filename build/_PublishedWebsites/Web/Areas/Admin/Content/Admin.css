@@ -1,0 +1,29 @@
+﻿@import url('Site.css');
+
+body.Admin{
+    border:none;
+}
+table{
+    border-collapse:collapse;
+    
+}
+
+table tr th{
+     border:1px solid #ddd
+}
+table tr td{
+    border:1px solid #ddd
+}
+
+nav {    
+    padding-top: 30px;
+    float:left;
+    width:20%;
+    height:100%;
+}
+
+article {   
+    float:right;
+    width:79%;
+    margin-right:10px;
+}
