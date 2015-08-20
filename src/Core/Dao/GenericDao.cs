@@ -23,7 +23,7 @@ namespace Core.Dao
             {
                 if (db == null)
                 {
-                    db = new Core.DbContext("DefaultConnection");                    
+                    db = Core.DbContext.Current;                    
                 }
 
                 return db;

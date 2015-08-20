@@ -12,6 +12,20 @@ namespace Core
     [DbConfigurationType(typeof(DbConfig))]
     public class DbContext : System.Data.Entity.DbContext, IDbContext
     {
+        [ThreadStatic]
+        protected static DbContext current;
+
+        public static DbContext Current
+        {
+            get
+            {
+                if (current == null)
+                    current = new DbContext("DefaultConnection");
+
+                return current;
+            }
+        }
+
         public DbContext(String nameOrConnectionString)
             : base(nameOrConnectionString)
         {
